@@ -8,7 +8,7 @@ object ColumnsAndExpressions extends App {
   System.setProperty("hadoop.home.dir", "C:\\Users\\anuwat\\Documents\\hadoop-2.8.1")
   val spark = SparkSession.builder()
     .appName("DF ColumnsAndExpressions")
-    .config("spark.master", "local")
+    .config("spark.master", "spark://174.138.28.128:7077")
     .getOrCreate()
 
   val carsDF = spark.read

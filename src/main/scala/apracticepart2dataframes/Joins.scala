@@ -2,6 +2,8 @@ package apracticepart2dataframes
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.expr
+import com.github.mrpowers.spark.daria.sql.DariaWriters
+
 
 object Joins extends App {
 
@@ -61,7 +63,24 @@ object Joins extends App {
 
   // using complex type
   guitaristDF.join(guitarsDF.withColumnRenamed("id", "guitarId")
-    , expr("array_contains(guitars, guitarId)")).show()
+    , expr("array_contains(guitars, guitarId)"))
+
+  bandsDF.show()
+
+//  bandsDF
+//    .coalesce(1)
+//    .write
+//    .format("com.databricks.spark.csv")
+//    .option("header", "true")
+//    .option("delimiter", " ")
+//    .mode("overwrite")
+//    .save("src/main/resources/data/bands1.csv")
+
+
+  DariaWriters.writeSingleFile(
+    bandsDF,"csv",spark.sparkContext,"src/main/resources/data/bands1/tmp","src/main/resources/data/bands1/myfile.csv","overwrite"
+  )
+
 
 
 }
