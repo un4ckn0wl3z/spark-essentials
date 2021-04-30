@@ -2,7 +2,7 @@ package apracticepart2dataframes
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.expr
-import com.github.mrpowers.spark.daria.sql.DariaWriters
+import utils.DataFrameUtil
 
 
 object Joins extends App {
@@ -68,17 +68,30 @@ object Joins extends App {
   bandsDF.show()
 
 //  bandsDF
-//    .coalesce(1)
 //    .write
 //    .format("com.databricks.spark.csv")
-//    .option("header", "true")
-//    .option("delimiter", " ")
+//    .options(
+//      Map[String, String](
+//        ("header","true"),
+//        ("delimiter","\t")
+//      )
+//    )
 //    .mode("overwrite")
 //    .save("src/main/resources/data/bands1.csv")
 
 
-  DariaWriters.writeSingleFile(
-    bandsDF,"csv",spark.sparkContext,"src/main/resources/data/bands1/tmp","src/main/resources/data/bands1/myfile.csv","overwrite"
+
+
+  DataFrameUtil.saveCsvAsSingFile(
+    bandsDF,"csv",
+    spark.sparkContext,
+    "src/main/resources/data/bands1/tmp",
+    "src/main/resources/data/bands1/myfile.txt",
+    "overwrite",
+    Map[String, String](
+      ("header","true"),
+      ("delimiter","\t")
+    )
   )
 
 
